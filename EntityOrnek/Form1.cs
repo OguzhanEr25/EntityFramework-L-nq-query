@@ -24,16 +24,128 @@ namespace EntityOrnek
             InitializeComponent();
         }
 
-       
+        // Öğrenci kaydetme butonu
+        public string OgrKaydet()
+        {
+            TblOgrenci ogrekle = new TblOgrenci();
+            ogrekle.Ad = txtOgrAd.Text;
+            ogrekle.Soyad = txtOgrSoyad.Text;
+            ogrekle.Cinsiyet = txtCinsiyet.Text;
+            db.TblOgrenci.Add(ogrekle);
+            db.SaveChanges();
+            MessageBox.Show("Öğrenci ekleme başarıyla gerçekleşti", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            txtOgrAd.Text = "";
+            txtOgrSoyad.Text = "";
+            txtCinsiyet.Text = "";
+            return Convert.ToString(ogrekle);
+        }
+
+        // Ders kaydetme metodu
+        public string DersKaydet()
+        {
+            TblDersler dersEkle = new TblDersler();
+            dersEkle.DersAd = txtDersAd.Text;
+            db.TblDersler.Add(dersEkle);
+            db.SaveChanges();
+            MessageBox.Show("Ders ekleme başarıyla gerçekleşti", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            txtDersAd.Text = "";
+            return Convert.ToString(dersEkle);
+        }
+        void Dersler()
+        {
+            SqlCommand dersler = new SqlCommand("Select DersID From TblDersler", bgl.SqlBaglanti());
+            SqlDataReader dr = dersler.ExecuteReader();
+            while (dr.Read())
+            {
+                cmbDersAdi.Properties.Items.Add(dr[0]);
+            }
+            bgl.SqlBaglanti().Close();
+        }
+
+        public string NotKaydet()
+        {
+            TblNotlar notEkle = new TblNotlar();
+            notEkle.OGR = Convert.ToInt32(txtOgrNo.Text);
+            notEkle.Ders = Convert.ToInt32(cmbDersAdi.Text);
+            notEkle.Vize = Convert.ToByte(txtVize.Text);
+            notEkle.Final = Convert.ToByte(txtFinal.Text);
+            if(txtBut.Text == "")
+            {
+                txtBut.Text = "";
+            }
+            else
+            {
+                notEkle.But = Convert.ToByte(txtBut.Text);
+            }
+
+            db.TblNotlar.Add(notEkle);
+            db.SaveChanges();
+            MessageBox.Show("Not girildi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return Convert.ToString(notEkle);
+        }
+
+        // Öğrenci silme metodu
+        public string OgrSil()
+        {
+            int id = Convert.ToInt32(txtOgrID.Text);
+            var x = db.TblOgrenci.Find(id);
+            db.TblOgrenci.Remove(x);
+            db.SaveChanges();
+            MessageBox.Show("Öğrenci silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            txtOgrID.Text = "";
+            return Convert.ToString(id);
+        }
+
+        // Ders silme metodu
+        public string DersSil()
+        {
+            int idDers = Convert.ToInt32(txtDersID.Text);
+            var y = db.TblDersler.Find(idDers);
+            db.TblDersler.Remove(y);
+            db.SaveChanges();
+            MessageBox.Show("Ders silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            txtDersID.Text = "";
+            return Convert.ToString(idDers);
+        }
+
+        public string OgrGuncelle()
+        {
+            int id = Convert.ToInt32(txtOgrID.Text);
+            var x = db.TblOgrenci.Find(id);
+            x.Ad = txtOgrAd.Text;
+            x.Soyad = txtOgrSoyad.Text;
+            x.Cinsiyet = txtCinsiyet.Text;
+            x.Fotograf = txtOgrFoto.Text;
+            db.SaveChanges();
+            MessageBox.Show("Öğrenci bilgileri güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            txtOgrID.Text = "";
+            txtOgrAd.Text = "";
+            txtOgrSoyad.Text = "";
+            txtCinsiyet.Text = "";
+            txtOgrFoto.Text = "";
+            return Convert.ToString(id);
+        }
+
+        public String DersGuncelle()
+        {
+            int id = Convert.ToInt32(txtDersID.Text);
+            var x = db.TblDersler.Find(id);
+            x.DersAd = txtDersAd.Text;
+            db.SaveChanges();
+            MessageBox.Show("Ders Adı güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            txtDersID.Text = "";
+            txtDersAd.Text = "";
+            return Convert.ToString(id);
+        }
+
         // Ders listele butonu
         private void BtnDersListe_Click(object sender, EventArgs e)
         {
             // Normal SQL komutları ile veri çekme
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM TblDersler", bgl.SqlBaglanti()); 
+            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM TblDersler", bgl.SqlBaglanti());
             DataTable dt = new DataTable();
             da.Fill(dt);
             dataGridView1.DataSource = dt;
-            
         }
 
         // Öğrenci listele butonu
@@ -41,6 +153,7 @@ namespace EntityOrnek
         {
             // Entity ile veri çekme
             dataGridView1.DataSource = db.TblOgrenci.ToList(); // Nesne ile tablodan veri çekme
+            dataGridView1.Columns[4].Visible = false;
             dataGridView1.Columns[5].Visible = false;
         }
 
@@ -48,7 +161,7 @@ namespace EntityOrnek
         private void BtnNotListe_Click(object sender, EventArgs e)
         {
             dataGridView1.DataSource = db.NotListesi(); // procedure çağırma
-            
+
             //var query = from item in db.TblNotlar
             //            select new
             //            {
@@ -62,70 +175,64 @@ namespace EntityOrnek
             //                item.Durum
             //            };
             //dataGridView1.DataSource = query.ToList();
+
+            // Join ile tablo birleştirme
+            //var sorgu = from db1 in db.TblNotlar
+            //            join db2 in db.TblOgrenci
+            //            on db1.OGR equals db2.ID
+
+            //            join db3 in db.TblDersler
+            //            on db1.Ders equals db3.DersID
+            //            select new
+            //            {
+            //                Öğrenci = db2.Ad + "" + db2.Soyad,
+            //                Vize = db1.Vize,
+            //                Ders = db3.DersAd
+            //            };
+            //dataGridView1.DataSource = sorgu.ToList();
         }
 
-        // Öğrenci kaydetme butonu
+        // Öğrenci ve Ders kaydetme butonu
         private void BtnKaydet_Click(object sender, EventArgs e)
         {
-            TblOgrenci ogrekle = new TblOgrenci();
-            ogrekle.Ad = txtOgrAd.Text;
-            ogrekle.Soyad = txtOgrSoyad.Text;
-            db.TblOgrenci.Add(ogrekle);
-            db.SaveChanges();
-            MessageBox.Show("Öğrenci ekleme başarıyla gerçekleşti", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            txtOgrAd.Text = "";
-            txtOgrSoyad.Text = "";
-
+            if(txtOgrAd.Text != "" & txtOgrSoyad.Text != "")
+            {
+                OgrKaydet();
+            }
+            if (txtDersAd.Text != "")
+            {
+                DersKaydet();
+            }
+            if(txtOgrNo.Text != "")
+            {
+                NotKaydet();
+            }
         }
 
-        // Öğrenci sil butonu
+        // Öğrenci ve Ders silme butonu
         private void BtnSil_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(txtOgrID.Text);
-            var x = db.TblOgrenci.Find(id);
-            db.TblOgrenci.Remove(x);
-            db.SaveChanges();
-            MessageBox.Show("Öğrenci silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            txtOgrID.Text = "";
-            
-        }
-
-        // Ders kaydetme butonu
-        private void BtnDersKaydet_Click(object sender, EventArgs e)
-        {
-            TblDersler dersEkle = new TblDersler();
-            dersEkle.DersAd = txtDersAd.Text;
-            db.TblDersler.Add(dersEkle);
-            db.SaveChanges();
-            MessageBox.Show("Ders ekleme başarıyla gerçekleşti", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            txtDersAd.Text = "";
-        }
-        // Ders silme butonu
-        private void BtnDersSil_Click(object sender, EventArgs e)
-        {
-            int id = Convert.ToInt32(txtDersID.Text);
-            var x = db.TblDersler.Find(id);
-            db.TblDersler.Remove(x);
-            db.SaveChanges();
-            MessageBox.Show("Ders silindi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            txtDersID.Text ="";
-            
+            if(txtOgrID.Text != "")
+            {
+                OgrSil();
+            }
+            if(txtDersID.Text != "")
+            {
+                DersSil();
+            }
         }
 
         // Öğrenci bilgi güncelleme butonu
         private void BtnGuncelle_Click(object sender, EventArgs e)
         {
-            int id = Convert.ToInt32(txtOgrID.Text);
-            var x = db.TblOgrenci.Find(id);
-            x.Ad = txtOgrAd.Text;
-            x.Soyad = txtOgrSoyad.Text;
-            x.Fotograf = txtOgrFoto.Text;
-            db.SaveChanges();
-            MessageBox.Show("Öğrenci bilgileri güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            txtOgrAd.Text = "";
-            txtOgrSoyad.Text = "";
-            txtOgrFoto.Text = "";
-
+            if(txtOgrID.Text != "")
+            {
+                OgrGuncelle();
+            }
+            if(txtDersID.Text != "")
+            {
+                DersGuncelle();
+            }
         }
 
         // Linq sorgusu ile veri bulma 
@@ -148,26 +255,31 @@ namespace EntityOrnek
         {   
             if(radioSirala.Checked == true)
             {
+                // Öğrencilerin isimlerini A --> Z ye doğru listele
                 List<TblOgrenci> liste1 = db.TblOgrenci.OrderBy(p => p.Ad).ToList();
                 dataGridView1.DataSource = liste1;
             }
             if(radioSiralaTers.Checked == true)
             {
+                // Öğrencilerin isimlerini Z --> A ya doğru listele
                 List<TblOgrenci> liste2 = db.TblOgrenci.OrderByDescending(p => p.Ad).ToList();
                 dataGridView1.DataSource = liste2;
             }
             if(radioID.Checked == true)
             {
+                // Öğeencileri ID'lerine göre listele
                 List<TblOgrenci> liste3 = db.TblOgrenci.OrderBy(p => p.ID).ToList();
                 dataGridView1.DataSource = liste3;
             }
             if(radioErkek.Checked == true)
             {
-                List<TblOgrenci> liste4 = db.TblOgrenci.OrderByDescending(p => p.Cinsiyet == "Erkek").ToList();
+                // Cinsiyeti erkek olanları başta listele
+                List<TblOgrenci> liste4 = db.TblOgrenci.OrderByDescending(p => p.Cinsiyet == "Erkek").ToList(); 
                 dataGridView1.DataSource = liste4;
             }
             if(radioKiz.Checked == true)
             {
+                // Cinsiyeti kız olanları başta listele
                 List<TblOgrenci> liste5 = db.TblOgrenci.OrderByDescending(p => p.Cinsiyet == "Kız").ToList();
                 dataGridView1.DataSource = liste5;
             }
@@ -181,14 +293,38 @@ namespace EntityOrnek
             //var vizeFinalToplam = db.TblNotlar.Sum(p => p.Vize + p.Final);
             if (radioOrtUstu.Checked == true)
             {
-                var ogrBilgi = db.TblOgrenci.GroupBy(x => x.ID + "" + x.Ad + "" + x.Soyad).Select(s => s.Key).FirstOrDefault();
+                //var ogrBilgi = db.TblOgrenci.GroupBy(x => x.ID + "" + x.Ad + "" + x.Soyad).Select(s => s.Key).FirstOrDefault();
                 List<TblNotlar> liste6 = db.TblNotlar.Where(p => p.Vize > db.TblNotlar.Average(x => x.Vize)).ToList();
                 dataGridView1.DataSource = liste6;
             }
-            if(radiOrtalama.Checked == true)
+            if(radioVizeNotlarıMax.Checked == true)
             {
-                
+                List<TblNotlar> liste7 = db.TblNotlar.OrderByDescending(p => p.Vize).ToList();
+                dataGridView1.DataSource = liste7;
+            }
+            if(radioVizeNotlariMin.Checked == true)
+            {
+                List<TblNotlar> liste8 = db.TblNotlar.OrderBy(p => p.Vize).ToList();
+                dataGridView1.DataSource = liste8;
             }
         }
+
+        private void cmbDersAdi_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Dersler();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Dersler();
+        }
+
+
+        //private void btnHesapla_Click(object sender, EventArgs e)
+        //{
+        //    var ortalama = db.TblNotlar.OrderBy(p => p.OGR).Select(p => (p.Vize * 0.5) + (p.Final * 0.5));
+        //    List<TblNotlar> liste9 = db.TblNotlar.OrderBy(p => p.Ortalama).ToList();
+        //    dataGridView1.DataSource = liste9;
+        //}
     }
 }
