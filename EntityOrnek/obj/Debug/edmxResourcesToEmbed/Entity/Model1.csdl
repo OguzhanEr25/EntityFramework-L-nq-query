@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbSınavModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TblDersler">
+    <Key>
+      <PropertyRef Name="DersID" />
+    </Key>
+    <Property Name="DersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DersAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TblNotlar" Relationship="Self.FK_TblNotlar_TblDersler" FromRole="TblDersler" ToRole="TblNotlar" />
+  </EntityType>
+  <EntityType Name="TblKulupler">
+    <Key>
+      <PropertyRef Name="kulupID" />
+    </Key>
+    <Property Name="kulupID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kulupAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TblNotlar">
+    <Key>
+      <PropertyRef Name="NotID" />
+    </Key>
+    <Property Name="NotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OGR" Type="Int32" />
+    <Property Name="Ders" Type="Int32" />
+    <Property Name="Vize" Type="Int16" />
+    <Property Name="Final" Type="Int16" />
+    <Property Name="But" Type="Int16" />
+    <Property Name="Ortalama" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="Durum" Type="Boolean" />
+    <NavigationProperty Name="TblDersler" Relationship="Self.FK_TblNotlar_TblDersler" FromRole="TblNotlar" ToRole="TblDersler" />
+    <NavigationProperty Name="TblOgrenci" Relationship="Self.FK_TblNotlar_TblOgrenci" FromRole="TblNotlar" ToRole="TblOgrenci" />
+  </EntityType>
+  <EntityType Name="TblOgrenci">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" MaxLength="22" FixedLength="true" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+    <Property Name="Cinsiyet" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Fotograf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TblNotlar" Relationship="Self.FK_TblNotlar_TblOgrenci" FromRole="TblOgrenci" ToRole="TblNotlar" />
+  </EntityType>
+  <Association Name="FK_TblNotlar_TblDersler">
+    <End Role="TblDersler" Type="Self.TblDersler" Multiplicity="0..1" />
+    <End Role="TblNotlar" Type="Self.TblNotlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblDersler">
+        <PropertyRef Name="DersID" />
+      </Principal>
+      <Dependent Role="TblNotlar">
+        <PropertyRef Name="Ders" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblNotlar_TblOgrenci">
+    <End Role="TblOgrenci" Type="Self.TblOgrenci" Multiplicity="0..1" />
+    <End Role="TblNotlar" Type="Self.TblNotlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblOgrenci">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TblNotlar">
+        <PropertyRef Name="OGR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbSınavEntities_" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TblDersler" EntityType="Self.TblDersler" />
+    <EntitySet Name="TblKulupler" EntityType="Self.TblKulupler" />
+    <EntitySet Name="TblNotlar" EntityType="Self.TblNotlar" />
+    <EntitySet Name="TblOgrenci" EntityType="Self.TblOgrenci" />
+    <AssociationSet Name="FK_TblNotlar_TblDersler" Association="Self.FK_TblNotlar_TblDersler">
+      <End Role="TblDersler" EntitySet="TblDersler" />
+      <End Role="TblNotlar" EntitySet="TblNotlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblNotlar_TblOgrenci" Association="Self.FK_TblNotlar_TblOgrenci">
+      <End Role="TblOgrenci" EntitySet="TblOgrenci" />
+      <End Role="TblNotlar" EntitySet="TblNotlar" />
+    </AssociationSet>
+    <FunctionImport Name="NotListesi" ReturnType="Collection(DbSınavModel.NotListesi_Result)" />
+  </EntityContainer>
+  <ComplexType Name="NotListesi_Result">
+    <Property Type="Int32" Name="NotID" Nullable="false" />
+    <Property Type="Int32" Name="OGR" Nullable="true" />
+    <Property Type="String" Name="OgrenciAdi" Nullable="true" MaxLength="22" />
+    <Property Type="Int32" Name="Ders" Nullable="true" />
+    <Property Type="String" Name="DersAdi" Nullable="true" MaxLength="50" />
+    <Property Type="Int16" Name="Vize" Nullable="true" />
+    <Property Type="Int16" Name="Final" Nullable="true" />
+    <Property Type="Int16" Name="But" Nullable="true" />
+    <Property Type="Decimal" Name="Ortalama" Nullable="true" Precision="5" Scale="2" />
+    <Property Type="Boolean" Name="Durum" Nullable="true" />
+  </ComplexType>
+</Schema>
