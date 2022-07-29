@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DbSınavModelStoreContainer" CdmEntityContainer="DbSınavEntities_">
+  <EntityContainerMapping StorageEntityContainer="DbSınavModelStoreContainer" CdmEntityContainer="DbSınavEntities2">
     <EntitySetMapping Name="TblDersler">
       <EntityTypeMapping TypeName="DbSınavModel.TblDersler">
         <MappingFragment StoreEntitySet="TblDersler">
@@ -47,7 +47,7 @@
         <ComplexTypeMapping TypeName="DbSınavModel.NotListesi_Result">
           <ScalarProperty Name="NotID" ColumnName="NotID" />
           <ScalarProperty Name="OGR" ColumnName="OGR" />
-          <ScalarProperty Name="OgrenciAdi" ColumnName="OgrenciAdi" />
+          <ScalarProperty Name="Ogrenci" ColumnName="Ogrenci" />
           <ScalarProperty Name="Ders" ColumnName="Ders" />
           <ScalarProperty Name="DersAdi" ColumnName="DersAdi" />
           <ScalarProperty Name="Vize" ColumnName="Vize" />

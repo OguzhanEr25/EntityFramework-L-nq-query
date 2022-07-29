@@ -17,7 +17,7 @@ namespace EntityOrnek
     {
 
         SqlBaglantisi bgl = new SqlBaglantisi();
-        DbSınavEntities_ db = new DbSınavEntities_(); // Model ile nesne oluşturma
+        DbSınavEntities2 db = new DbSınavEntities2(); // Model ile nesne oluşturma
 
         public Form1()
         {
@@ -62,13 +62,31 @@ namespace EntityOrnek
             bgl.SqlBaglanti().Close();
         }
 
+        void DersSec()
+        {
+            SqlCommand dersSec = new SqlCommand("Select DersAd From TblDersler", bgl.SqlBaglanti());
+            SqlDataReader dr2 = dersSec.ExecuteReader();
+            while (dr2.Read())
+            {
+                cmbDersSec.Properties.Items.Add(dr2[0]);
+            }
+            bgl.SqlBaglanti().Close();
+        }
+
         public string NotKaydet()
         {
             TblNotlar notEkle = new TblNotlar();
             notEkle.OGR = Convert.ToInt32(txtOgrNo.Text);
             notEkle.Ders = Convert.ToInt32(cmbDersAdi.Text);
             notEkle.Vize = Convert.ToByte(txtVize.Text);
-            notEkle.Final = Convert.ToByte(txtFinal.Text);
+            if(txtFinal.Text == "")
+            {
+                txtFinal.Text = "";
+            }
+            else
+            {
+                notEkle.Final = Convert.ToByte(txtFinal.Text);
+            }
             if(txtBut.Text == "")
             {
                 txtBut.Text = "";
@@ -126,7 +144,7 @@ namespace EntityOrnek
             return Convert.ToString(id);
         }
 
-        public String DersGuncelle()
+        public string DersGuncelle()
         {
             int id = Convert.ToInt32(txtDersID.Text);
             var x = db.TblDersler.Find(id);
@@ -135,6 +153,32 @@ namespace EntityOrnek
             MessageBox.Show("Ders Adı güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             txtDersID.Text = "";
             txtDersAd.Text = "";
+            return Convert.ToString(id);
+        }
+
+        public string NotGuncelle()
+        {
+            int id = Convert.ToInt32(txtOgrNo.Text); //NotID ye göre güncelleme yapıyor, OgrNo olarak değiştirilecek
+            var x = db.TblNotlar.Find(id);
+            if(txtVize.Text != "")
+            {
+                x.Vize = Convert.ToByte(txtVize.Text);
+            }
+            if(txtFinal.Text != "")
+            {
+                x.Final = Convert.ToByte(txtFinal.Text);
+            }
+            if(txtBut.Text != "")
+            {
+                x.But = Convert.ToByte(txtBut.Text);
+            }
+            db.SaveChanges();
+            MessageBox.Show("Not güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            txtOgrNo.Text = "";
+            cmbDersAdi.Text = "";
+            txtVize.Text = "";
+            txtFinal.Text = "";
+            txtBut.Text = "";
             return Convert.ToString(id);
         }
 
@@ -208,7 +252,7 @@ namespace EntityOrnek
                 NotKaydet();
             }
         }
-
+        
         // Öğrenci ve Ders silme butonu
         private void BtnSil_Click(object sender, EventArgs e)
         {
@@ -232,6 +276,10 @@ namespace EntityOrnek
             if(txtDersID.Text != "")
             {
                 DersGuncelle();
+            }
+            if(txtOgrNo.Text != "")
+            {
+                NotGuncelle();
             }
         }
 
@@ -288,43 +336,44 @@ namespace EntityOrnek
                 var VizeOrt = db.TblNotlar.Average(P => P.Vize);
                 MessageBox.Show("vize ortalama" + VizeOrt.ToString());
             }
-            //var vizeToplam = db.TblNotlar.Sum(P => P.Vize);
-            //var VizeOrt = db.TblNotlar.Average(P => P.Vize);
-            //var vizeFinalToplam = db.TblNotlar.Sum(p => p.Vize + p.Final);
+            
             if (radioOrtUstu.Checked == true)
             {
-                //var ogrBilgi = db.TblOgrenci.GroupBy(x => x.ID + "" + x.Ad + "" + x.Soyad).Select(s => s.Key).FirstOrDefault();
-                List<TblNotlar> liste6 = db.TblNotlar.Where(p => p.Vize > db.TblNotlar.Average(x => x.Vize)).ToList();
+                // Vizelerden ortalama üstünde alanları listeleme
+                List<NotListesi_Result> liste6 = db.NotListesi().Where(p => p.Vize > db.TblNotlar.Average(x => x.Vize)).ToList();
                 dataGridView1.DataSource = liste6;
             }
             if(radioVizeNotlarıMax.Checked == true)
             {
-                List<TblNotlar> liste7 = db.TblNotlar.OrderByDescending(p => p.Vize).ToList();
+                // Vize notlarını Max --> Min listeleme
+                List<NotListesi_Result> liste7 = db.NotListesi().OrderByDescending(p => p.Vize).ToList();
                 dataGridView1.DataSource = liste7;
             }
             if(radioVizeNotlariMin.Checked == true)
             {
-                List<TblNotlar> liste8 = db.TblNotlar.OrderBy(p => p.Vize).ToList();
-                dataGridView1.DataSource = liste8;
+                // Vize notlarını Min --> Max listeleme
+                List<NotListesi_Result> liste8 = db.NotListesi().OrderBy(p => p.Vize).ToList();
+                dataGridView1.DataSource = liste8;  
             }
-        }
-
-        private void cmbDersAdi_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Dersler();
+            if(cmbDersSec.Text != "")
+            {
+                // Ders adına  göre listeleme
+                List<NotListesi_Result> liste9 = db.NotListesi().Where(p => p.DersAdi == cmbDersSec.Text).ToList();
+                dataGridView1.DataSource = liste9;
+                cmbDersSec.Text = "";
+            }
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Dersler();
+            DersSec();
         }
 
-
-        //private void btnHesapla_Click(object sender, EventArgs e)
-        //{
-        //    var ortalama = db.TblNotlar.OrderBy(p => p.OGR).Select(p => (p.Vize * 0.5) + (p.Final * 0.5));
-        //    List<TblNotlar> liste9 = db.TblNotlar.OrderBy(p => p.Ortalama).ToList();
-        //    dataGridView1.DataSource = liste9;
-        //}
+        private void cmbDersSec_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // DersSec();
+        }
     }
 }

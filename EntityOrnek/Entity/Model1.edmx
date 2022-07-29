@@ -37,8 +37,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Ad" Type="nchar" MaxLength="22" />
-          <Property Name="Soyad" Type="nchar" MaxLength="25" />
+          <Property Name="Ad" Type="nchar" MaxLength="15" />
+          <Property Name="Soyad" Type="nchar" MaxLength="20" />
           <Property Name="Cinsiyet" Type="nchar" MaxLength="10" />
           <Property Name="Fotograf" Type="varchar" MaxLength="100" />
         </EntityType>
@@ -121,8 +121,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ad" Type="String" MaxLength="22" FixedLength="true" Unicode="true" />
-          <Property Name="Soyad" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Ad" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="Cinsiyet" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Fotograf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TblNotlar" Relationship="Self.FK_TblNotlar_TblOgrenci" FromRole="TblOgrenci" ToRole="TblNotlar" />
@@ -151,7 +151,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DbSınavEntities_" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DbSınavEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TblDersler" EntityType="Self.TblDersler" />
           <EntitySet Name="TblKulupler" EntityType="Self.TblKulupler" />
           <EntitySet Name="TblNotlar" EntityType="Self.TblNotlar" />
@@ -169,13 +169,13 @@
         <ComplexType Name="NotListesi_Result">
           <Property Type="Int32" Name="NotID" Nullable="false" />
           <Property Type="Int32" Name="OGR" Nullable="true" />
-          <Property Type="String" Name="OgrenciAdi" Nullable="true" MaxLength="22" />
+          <Property Type="String" Name="Ogrenci" Nullable="true" MaxLength="36" />
           <Property Type="Int32" Name="Ders" Nullable="true" />
           <Property Type="String" Name="DersAdi" Nullable="true" MaxLength="50" />
           <Property Type="Int16" Name="Vize" Nullable="true" />
           <Property Type="Int16" Name="Final" Nullable="true" />
           <Property Type="Int16" Name="But" Nullable="true" />
-          <Property Type="Decimal" Name="Ortalama" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="Decimal" Name="Ortalama" Nullable="true" Precision="8" Scale="1" />
           <Property Type="Boolean" Name="Durum" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -183,7 +183,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DbSınavModelStoreContainer" CdmEntityContainer="DbSınavEntities_">
+        <EntityContainerMapping StorageEntityContainer="DbSınavModelStoreContainer" CdmEntityContainer="DbSınavEntities2">
           <EntitySetMapping Name="TblDersler">
             <EntityTypeMapping TypeName="DbSınavModel.TblDersler">
               <MappingFragment StoreEntitySet="TblDersler">
@@ -230,7 +230,7 @@
               <ComplexTypeMapping TypeName="DbSınavModel.NotListesi_Result">
                 <ScalarProperty Name="NotID" ColumnName="NotID" />
                 <ScalarProperty Name="OGR" ColumnName="OGR" />
-                <ScalarProperty Name="OgrenciAdi" ColumnName="OgrenciAdi" />
+                <ScalarProperty Name="Ogrenci" ColumnName="Ogrenci" />
                 <ScalarProperty Name="Ders" ColumnName="Ders" />
                 <ScalarProperty Name="DersAdi" ColumnName="DersAdi" />
                 <ScalarProperty Name="Vize" ColumnName="Vize" />

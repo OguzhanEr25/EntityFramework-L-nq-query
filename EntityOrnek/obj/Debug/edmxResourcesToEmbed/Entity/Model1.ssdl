@@ -32,8 +32,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Ad" Type="nchar" MaxLength="22" />
-    <Property Name="Soyad" Type="nchar" MaxLength="25" />
+    <Property Name="Ad" Type="nchar" MaxLength="15" />
+    <Property Name="Soyad" Type="nchar" MaxLength="20" />
     <Property Name="Cinsiyet" Type="nchar" MaxLength="10" />
     <Property Name="Fotograf" Type="varchar" MaxLength="100" />
   </EntityType>

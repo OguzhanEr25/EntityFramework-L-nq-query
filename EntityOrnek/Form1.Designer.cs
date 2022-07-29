@@ -47,7 +47,7 @@ namespace EntityOrnek
             this.txtOgrID = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.grpSınavlar = new DevExpress.XtraEditors.GroupControl();
-            this.cmbDersAdi = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.btnNotGuncelle = new DevExpress.XtraEditors.SimpleButton();
             this.lblDersAdi = new DevExpress.XtraEditors.LabelControl();
             this.txtOgrNo = new DevExpress.XtraEditors.TextEdit();
             this.lblOgrenciID = new DevExpress.XtraEditors.LabelControl();
@@ -61,8 +61,6 @@ namespace EntityOrnek
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
             this.txtVize = new DevExpress.XtraEditors.TextEdit();
             this.labelControl8 = new DevExpress.XtraEditors.LabelControl();
-            this.btnNotGuncelle = new DevExpress.XtraEditors.SimpleButton();
-            this.btnHesapla = new DevExpress.XtraEditors.SimpleButton();
             this.grpDers = new DevExpress.XtraEditors.GroupControl();
             this.txtDersAd = new DevExpress.XtraEditors.TextEdit();
             this.BtnDersListe = new DevExpress.XtraEditors.SimpleButton();
@@ -81,6 +79,9 @@ namespace EntityOrnek
             this.radioOrtUstu = new System.Windows.Forms.RadioButton();
             this.radioVizeNotlarıMax = new System.Windows.Forms.RadioButton();
             this.radioVizeNotlariMin = new System.Windows.Forms.RadioButton();
+            this.cmbDersSec = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.LblDersSec = new DevExpress.XtraEditors.LabelControl();
+            this.cmbDersAdi = new DevExpress.XtraEditors.ComboBoxEdit();
             ((System.ComponentModel.ISupportInitialize)(this.grpOgrenci)).BeginInit();
             this.grpOgrenci.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCinsiyet.Properties)).BeginInit();
@@ -90,7 +91,6 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.txtOgrID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grpSınavlar)).BeginInit();
             this.grpSınavlar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOgrNo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDurum.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOrtalama.Properties)).BeginInit();
@@ -102,6 +102,8 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.txtDersAd.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDersID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbDersSec.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnOgrListele
@@ -272,7 +274,6 @@ namespace EntityOrnek
             this.grpSınavlar.AppearanceCaption.BackColor = System.Drawing.Color.Transparent;
             this.grpSınavlar.AppearanceCaption.Options.UseBackColor = true;
             this.grpSınavlar.CaptionImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("grpSınavlar.CaptionImageOptions.Image")));
-            this.grpSınavlar.Controls.Add(this.btnHesapla);
             this.grpSınavlar.Controls.Add(this.cmbDersAdi);
             this.grpSınavlar.Controls.Add(this.btnNotGuncelle);
             this.grpSınavlar.Controls.Add(this.lblDersAdi);
@@ -294,15 +295,24 @@ namespace EntityOrnek
             this.grpSınavlar.TabIndex = 7;
             this.grpSınavlar.Text = "Sınav";
             // 
-            // cmbDersAdi
+            // btnNotGuncelle
             // 
-            this.cmbDersAdi.Location = new System.Drawing.Point(155, 110);
-            this.cmbDersAdi.Name = "cmbDersAdi";
-            this.cmbDersAdi.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbDersAdi.Size = new System.Drawing.Size(129, 20);
-            this.cmbDersAdi.TabIndex = 27;
-            this.cmbDersAdi.SelectedIndexChanged += new System.EventHandler(this.cmbDersAdi_SelectedIndexChanged);
+            this.btnNotGuncelle.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Question;
+            this.btnNotGuncelle.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnNotGuncelle.Appearance.ForeColor = System.Drawing.Color.Transparent;
+            this.btnNotGuncelle.Appearance.Options.UseBackColor = true;
+            this.btnNotGuncelle.Appearance.Options.UseFont = true;
+            this.btnNotGuncelle.Appearance.Options.UseForeColor = true;
+            this.btnNotGuncelle.Appearance.Options.UseTextOptions = true;
+            this.btnNotGuncelle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.btnNotGuncelle.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.btnNotGuncelle.AppearanceDisabled.BackColor = System.Drawing.Color.Transparent;
+            this.btnNotGuncelle.AppearanceDisabled.Options.UseBackColor = true;
+            this.btnNotGuncelle.Location = new System.Drawing.Point(51, 374);
+            this.btnNotGuncelle.Name = "btnNotGuncelle";
+            this.btnNotGuncelle.Size = new System.Drawing.Size(129, 32);
+            this.btnNotGuncelle.TabIndex = 25;
+            this.btnNotGuncelle.Text = "Sınav Notu Güncelle";
             // 
             // lblDersAdi
             // 
@@ -416,40 +426,6 @@ namespace EntityOrnek
             this.labelControl8.TabIndex = 14;
             this.labelControl8.Text = "Vize :";
             // 
-            // btnNotGuncelle
-            // 
-            this.btnNotGuncelle.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Question;
-            this.btnNotGuncelle.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnNotGuncelle.Appearance.ForeColor = System.Drawing.Color.Transparent;
-            this.btnNotGuncelle.Appearance.Options.UseBackColor = true;
-            this.btnNotGuncelle.Appearance.Options.UseFont = true;
-            this.btnNotGuncelle.Appearance.Options.UseForeColor = true;
-            this.btnNotGuncelle.Appearance.Options.UseTextOptions = true;
-            this.btnNotGuncelle.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.btnNotGuncelle.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.btnNotGuncelle.AppearanceDisabled.BackColor = System.Drawing.Color.Transparent;
-            this.btnNotGuncelle.AppearanceDisabled.Options.UseBackColor = true;
-            this.btnNotGuncelle.Location = new System.Drawing.Point(24, 383);
-            this.btnNotGuncelle.Name = "btnNotGuncelle";
-            this.btnNotGuncelle.Size = new System.Drawing.Size(129, 32);
-            this.btnNotGuncelle.TabIndex = 25;
-            this.btnNotGuncelle.Text = "Sınav Notu Güncelle";
-            // 
-            // btnHesapla
-            // 
-            this.btnHesapla.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Question;
-            this.btnHesapla.Appearance.ForeColor = System.Drawing.Color.Black;
-            this.btnHesapla.Appearance.Options.UseBackColor = true;
-            this.btnHesapla.Appearance.Options.UseForeColor = true;
-            this.btnHesapla.AppearancePressed.BackColor = System.Drawing.Color.Transparent;
-            this.btnHesapla.AppearancePressed.Options.UseBackColor = true;
-            this.btnHesapla.Location = new System.Drawing.Point(174, 383);
-            this.btnHesapla.Name = "btnHesapla";
-            this.btnHesapla.Size = new System.Drawing.Size(129, 32);
-            this.btnHesapla.TabIndex = 24;
-            this.btnHesapla.Text = "Hesapla";
-            this.btnHesapla.Click += new System.EventHandler(this.btnHesapla_Click);
-            // 
             // grpDers
             // 
             this.grpDers.Appearance.BackColor = System.Drawing.Color.Transparent;
@@ -515,9 +491,9 @@ namespace EntityOrnek
             // 
             this.BtnNotListe.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
             this.BtnNotListe.Appearance.Options.UseBackColor = true;
-            this.BtnNotListe.Location = new System.Drawing.Point(866, 557);
+            this.BtnNotListe.Location = new System.Drawing.Point(868, 566);
             this.BtnNotListe.Name = "BtnNotListe";
-            this.BtnNotListe.Size = new System.Drawing.Size(129, 32);
+            this.BtnNotListe.Size = new System.Drawing.Size(127, 32);
             this.BtnNotListe.TabIndex = 10;
             this.BtnNotListe.Text = "Not Listesi";
             this.BtnNotListe.Click += new System.EventHandler(this.BtnNotListe_Click);
@@ -546,7 +522,7 @@ namespace EntityOrnek
             // 
             this.BtnSirala.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
             this.BtnSirala.Appearance.Options.UseBackColor = true;
-            this.BtnSirala.Location = new System.Drawing.Point(1034, 246);
+            this.BtnSirala.Location = new System.Drawing.Point(1034, 285);
             this.BtnSirala.Name = "BtnSirala";
             this.BtnSirala.Size = new System.Drawing.Size(127, 32);
             this.BtnSirala.TabIndex = 13;
@@ -641,11 +617,42 @@ namespace EntityOrnek
             this.radioVizeNotlariMin.Text = "Vize Notlarını Küçükten Büyüğe Sırala";
             this.radioVizeNotlariMin.UseVisualStyleBackColor = true;
             // 
+            // cmbDersSec
+            // 
+            this.cmbDersSec.Location = new System.Drawing.Point(1109, 249);
+            this.cmbDersSec.Name = "cmbDersSec";
+            this.cmbDersSec.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbDersSec.Size = new System.Drawing.Size(113, 20);
+            this.cmbDersSec.TabIndex = 28;
+            this.cmbDersSec.SelectedIndexChanged += new System.EventHandler(this.cmbDersSec_SelectedIndexChanged);
+            // 
+            // LblDersSec
+            // 
+            this.LblDersSec.Appearance.Font = new System.Drawing.Font("PMingLiU-ExtB", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblDersSec.Appearance.Options.UseFont = true;
+            this.LblDersSec.Location = new System.Drawing.Point(1011, 251);
+            this.LblDersSec.Name = "LblDersSec";
+            this.LblDersSec.Size = new System.Drawing.Size(83, 15);
+            this.LblDersSec.TabIndex = 29;
+            this.LblDersSec.Text = "DERS ADI :";
+            // 
+            // cmbDersAdi
+            // 
+            this.cmbDersAdi.Location = new System.Drawing.Point(155, 109);
+            this.cmbDersAdi.Name = "cmbDersAdi";
+            this.cmbDersAdi.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbDersAdi.Size = new System.Drawing.Size(129, 20);
+            this.cmbDersAdi.TabIndex = 27;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 769);
+            this.Controls.Add(this.LblDersSec);
+            this.Controls.Add(this.cmbDersSec);
             this.Controls.Add(this.radioVizeNotlariMin);
             this.Controls.Add(this.radioVizeNotlarıMax);
             this.Controls.Add(this.radioOrtUstu);
@@ -666,7 +673,6 @@ namespace EntityOrnek
             this.Controls.Add(this.grpOgrenci);
             this.Controls.Add(this.BtnBul);
             this.Name = "Form1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sınav Bilgi Sistemi";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grpOgrenci)).EndInit();
@@ -680,7 +686,6 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.grpSınavlar)).EndInit();
             this.grpSınavlar.ResumeLayout(false);
             this.grpSınavlar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOgrNo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDurum.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOrtalama.Properties)).EndInit();
@@ -693,6 +698,8 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.txtDersAd.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDersID.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbDersSec.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -730,7 +737,6 @@ namespace EntityOrnek
         private DevExpress.XtraEditors.SimpleButton BtnDersListe;
         private DevExpress.XtraEditors.SimpleButton BtnNotListe;
         private DevExpress.XtraEditors.SimpleButton btnNotGuncelle;
-        private DevExpress.XtraEditors.SimpleButton btnHesapla;
         private DevExpress.XtraEditors.TextEdit txtDurum;
         private DevExpress.XtraEditors.LabelControl labelControl9;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -746,10 +752,12 @@ namespace EntityOrnek
         private DevExpress.XtraEditors.LabelControl labelControl10;
         private System.Windows.Forms.RadioButton radioVizeNotlarıMax;
         private System.Windows.Forms.RadioButton radioVizeNotlariMin;
-        private DevExpress.XtraEditors.ComboBoxEdit cmbDersAdi;
         private DevExpress.XtraEditors.LabelControl lblDersAdi;
         private DevExpress.XtraEditors.TextEdit txtOgrNo;
         private DevExpress.XtraEditors.LabelControl lblOgrenciID;
+        private DevExpress.XtraEditors.ComboBoxEdit cmbDersSec;
+        private DevExpress.XtraEditors.LabelControl LblDersSec;
+        private DevExpress.XtraEditors.ComboBoxEdit cmbDersAdi;
     }
 }
 

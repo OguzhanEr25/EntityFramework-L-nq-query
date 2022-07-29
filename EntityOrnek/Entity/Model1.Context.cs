@@ -15,10 +15,10 @@ namespace EntityOrnek.Entity
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DbSınavEntities_ : DbContext
+    public partial class DbSınavEntities2 : DbContext
     {
-        public DbSınavEntities_()
-            : base("name=DbSınavEntities_")
+        public DbSınavEntities2()
+            : base("name=DbSınavEntities2")
         {
         }
     

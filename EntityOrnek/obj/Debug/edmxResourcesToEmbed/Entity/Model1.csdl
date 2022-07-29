@@ -35,8 +35,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Ad" Type="String" MaxLength="22" FixedLength="true" Unicode="true" />
-    <Property Name="Soyad" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+    <Property Name="Ad" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
     <Property Name="Cinsiyet" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="Fotograf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="TblNotlar" Relationship="Self.FK_TblNotlar_TblOgrenci" FromRole="TblOgrenci" ToRole="TblNotlar" />
@@ -65,7 +65,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="DbSınavEntities_" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="DbSınavEntities2" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="TblDersler" EntityType="Self.TblDersler" />
     <EntitySet Name="TblKulupler" EntityType="Self.TblKulupler" />
     <EntitySet Name="TblNotlar" EntityType="Self.TblNotlar" />
@@ -83,13 +83,13 @@
   <ComplexType Name="NotListesi_Result">
     <Property Type="Int32" Name="NotID" Nullable="false" />
     <Property Type="Int32" Name="OGR" Nullable="true" />
-    <Property Type="String" Name="OgrenciAdi" Nullable="true" MaxLength="22" />
+    <Property Type="String" Name="Ogrenci" Nullable="true" MaxLength="36" />
     <Property Type="Int32" Name="Ders" Nullable="true" />
     <Property Type="String" Name="DersAdi" Nullable="true" MaxLength="50" />
     <Property Type="Int16" Name="Vize" Nullable="true" />
     <Property Type="Int16" Name="Final" Nullable="true" />
     <Property Type="Int16" Name="But" Nullable="true" />
-    <Property Type="Decimal" Name="Ortalama" Nullable="true" Precision="5" Scale="2" />
+    <Property Type="Decimal" Name="Ortalama" Nullable="true" Precision="8" Scale="1" />
     <Property Type="Boolean" Name="Durum" Nullable="true" />
   </ComplexType>
 </Schema>

@@ -15,7 +15,7 @@ namespace EntityOrnek.Entity
     {
         public int NotID { get; set; }
         public Nullable<int> OGR { get; set; }
-        public string OgrenciAdi { get; set; }
+        public string Ogrenci { get; set; }
         public Nullable<int> Ders { get; set; }
         public string DersAdi { get; set; }
         public Nullable<short> Vize { get; set; }
