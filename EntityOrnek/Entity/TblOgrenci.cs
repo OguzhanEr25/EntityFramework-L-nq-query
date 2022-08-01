@@ -14,19 +14,10 @@ namespace EntityOrnek.Entity
     
     public partial class TblOgrenci
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TblOgrenci()
-        {
-            this.TblNotlar = new HashSet<TblNotlar>();
-        }
-    
         public int ID { get; set; }
         public string Ad { get; set; }
         public string Soyad { get; set; }
         public string Cinsiyet { get; set; }
         public string Fotograf { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TblNotlar> TblNotlar { get; set; }
     }
 }

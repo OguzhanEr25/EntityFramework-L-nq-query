@@ -14,16 +14,7 @@ namespace EntityOrnek.Entity
     
     public partial class TblDersler
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TblDersler()
-        {
-            this.TblNotlar = new HashSet<TblNotlar>();
-        }
-    
         public int DersID { get; set; }
         public string DersAd { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TblNotlar> TblNotlar { get; set; }
     }
 }

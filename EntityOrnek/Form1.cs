@@ -17,7 +17,7 @@ namespace EntityOrnek
     {
 
         SqlBaglantisi bgl = new SqlBaglantisi();
-        DbSınavEntities2 db = new DbSınavEntities2(); // Model ile nesne oluşturma
+        DbSınavEntities_ db = new DbSınavEntities_(); // Model ile nesne oluşturma
 
         public Form1()
         {
@@ -172,6 +172,10 @@ namespace EntityOrnek
             {
                 x.But = Convert.ToByte(txtBut.Text);
             }
+            if(txtDurum.Text != "")
+            {
+                x.Durum = Convert.ToBoolean(txtDurum.Text);
+            }
             db.SaveChanges();
             MessageBox.Show("Not güncellendi", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             txtOgrNo.Text = "";
@@ -179,6 +183,7 @@ namespace EntityOrnek
             txtVize.Text = "";
             txtFinal.Text = "";
             txtBut.Text = "";
+            txtDurum.Text = "";
             return Convert.ToString(id);
         }
 
@@ -198,13 +203,32 @@ namespace EntityOrnek
             // Entity ile veri çekme
             dataGridView1.DataSource = db.TblOgrenci.ToList(); // Nesne ile tablodan veri çekme
             dataGridView1.Columns[4].Visible = false;
-            dataGridView1.Columns[5].Visible = false;
+            
         }
 
         // Not listeleme butonu
         private void BtnNotListe_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = db.NotListesi(); // procedure çağırma
+            
+            {
+                var degerler = db.NotListesi().Select(x =>
+                new
+                {
+                    NotID = x.NotID,
+                    ogrID = x.OGR,
+                    Ogrenci = x.Ogrenci,
+                    DersID = x.Ders,
+                    DersAdi = x.DersAdi,
+                    Vize = x.Vize,
+                    Final = x.Final,
+                    But = x.But,
+                    Ortalaması = x.Ortalama,
+                    Durum = x.Durum == true ? "Geçer" : "Kaldı"
+
+                }) ;
+                dataGridView1.DataSource = degerler.ToList();
+            }
+            //dataGridView1.DataSource = db.NotListesi(); // procedure çağırma
 
             //var query = from item in db.TblNotlar
             //            select new
@@ -220,20 +244,21 @@ namespace EntityOrnek
             //            };
             //dataGridView1.DataSource = query.ToList();
 
-            // Join ile tablo birleştirme
-            //var sorgu = from db1 in db.TblNotlar
-            //            join db2 in db.TblOgrenci
-            //            on db1.OGR equals db2.ID
+            //Join ile tablo birleştirme
+        //    var sorgu = from db1 in db.TblNotlar
+        //                join db2 in db.TblOgrenci
+        //                on db1.OGR equals db2.ID
 
-            //            join db3 in db.TblDersler
-            //            on db1.Ders equals db3.DersID
-            //            select new
-            //            {
-            //                Öğrenci = db2.Ad + "" + db2.Soyad,
-            //                Vize = db1.Vize,
-            //                Ders = db3.DersAd
-            //            };
-            //dataGridView1.DataSource = sorgu.ToList();
+        //                join db3 in db.TblDersler
+        //                on db1.Ders equals db3.DersID
+        //                select new
+        //                {
+        //                    Öğrenci = db2.Ad + "" + db2.Soyad,
+        //                    Ders = db3.DersAd,
+        //                    Vize = db1.Vize,
+        //                    Final = db1.Final
+        //                };
+        //    dataGridView1.DataSource = sorgu.ToList();
         }
 
         // Öğrenci ve Ders kaydetme butonu
@@ -362,7 +387,33 @@ namespace EntityOrnek
                 dataGridView1.DataSource = liste9;
                 cmbDersSec.Text = "";
             }
-            
+
+            if (radioGeçen.Checked == true)
+            {
+                List<NotListesi_Result> list = db.NotListesi().Where(p => p.Durum == true).ToList();
+                dataGridView1.DataSource = list;
+                //var degerler = db.NotListesi().Select(x =>
+                //new
+                //{
+                //    Ogrenci = x.Ogrenci,
+                //    Ortalaması = x.Ortalama,
+                //    Durum = x.Durum == true ? "Geçer" :
+                //});
+                //dataGridView1.DataSource = degerler.ToList();
+            }
+            if (radioKalan.Checked == true)
+            {
+                List<NotListesi_Result> list1 = db.NotListesi().Where(p => p.Durum == false).ToList();
+                dataGridView1.DataSource = list1;
+            }
+            if(radioButton1.Checked == true)
+            {
+                // Kalan öğrenciler içinde ortalaması en yüksek olanı verir 
+                var deger = db.NotListesi().Min(x => x.Ortalama).ToString();
+                lblControl.Text = db.NotListesi().Where(p => p.Durum == false).Max(y => y.Ortalama).ToString();
+                dataGridView1.DataSource = lblControl.Text;
+            }
+
         }
 
         private void Form1_Load(object sender, EventArgs e)

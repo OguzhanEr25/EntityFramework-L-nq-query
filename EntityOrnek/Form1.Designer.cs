@@ -47,6 +47,7 @@ namespace EntityOrnek
             this.txtOgrID = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.grpSınavlar = new DevExpress.XtraEditors.GroupControl();
+            this.cmbDersAdi = new DevExpress.XtraEditors.ComboBoxEdit();
             this.btnNotGuncelle = new DevExpress.XtraEditors.SimpleButton();
             this.lblDersAdi = new DevExpress.XtraEditors.LabelControl();
             this.txtOgrNo = new DevExpress.XtraEditors.TextEdit();
@@ -81,7 +82,10 @@ namespace EntityOrnek
             this.radioVizeNotlariMin = new System.Windows.Forms.RadioButton();
             this.cmbDersSec = new DevExpress.XtraEditors.ComboBoxEdit();
             this.LblDersSec = new DevExpress.XtraEditors.LabelControl();
-            this.cmbDersAdi = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.radioKalan = new System.Windows.Forms.RadioButton();
+            this.radioGeçen = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.lblControl = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.grpOgrenci)).BeginInit();
             this.grpOgrenci.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCinsiyet.Properties)).BeginInit();
@@ -91,6 +95,7 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.txtOgrID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grpSınavlar)).BeginInit();
             this.grpSınavlar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOgrNo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDurum.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOrtalama.Properties)).BeginInit();
@@ -103,7 +108,6 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.txtDersID.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbDersSec.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnOgrListele
@@ -294,6 +298,15 @@ namespace EntityOrnek
             this.grpSınavlar.Size = new System.Drawing.Size(333, 472);
             this.grpSınavlar.TabIndex = 7;
             this.grpSınavlar.Text = "Sınav";
+            // 
+            // cmbDersAdi
+            // 
+            this.cmbDersAdi.Location = new System.Drawing.Point(155, 109);
+            this.cmbDersAdi.Name = "cmbDersAdi";
+            this.cmbDersAdi.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbDersAdi.Size = new System.Drawing.Size(129, 20);
+            this.cmbDersAdi.TabIndex = 27;
             // 
             // btnNotGuncelle
             // 
@@ -522,7 +535,7 @@ namespace EntityOrnek
             // 
             this.BtnSirala.Appearance.BackColor = DevExpress.LookAndFeel.DXSkinColors.FillColors.Primary;
             this.BtnSirala.Appearance.Options.UseBackColor = true;
-            this.BtnSirala.Location = new System.Drawing.Point(1034, 285);
+            this.BtnSirala.Location = new System.Drawing.Point(1034, 355);
             this.BtnSirala.Name = "BtnSirala";
             this.BtnSirala.Size = new System.Drawing.Size(127, 32);
             this.BtnSirala.TabIndex = 13;
@@ -598,7 +611,7 @@ namespace EntityOrnek
             // radioVizeNotlarıMax
             // 
             this.radioVizeNotlarıMax.AutoSize = true;
-            this.radioVizeNotlarıMax.Location = new System.Drawing.Point(1011, 186);
+            this.radioVizeNotlarıMax.Location = new System.Drawing.Point(1011, 172);
             this.radioVizeNotlarıMax.Name = "radioVizeNotlarıMax";
             this.radioVizeNotlarıMax.Size = new System.Drawing.Size(203, 17);
             this.radioVizeNotlarıMax.TabIndex = 20;
@@ -609,7 +622,7 @@ namespace EntityOrnek
             // radioVizeNotlariMin
             // 
             this.radioVizeNotlariMin.AutoSize = true;
-            this.radioVizeNotlariMin.Location = new System.Drawing.Point(1011, 210);
+            this.radioVizeNotlariMin.Location = new System.Drawing.Point(1011, 196);
             this.radioVizeNotlariMin.Name = "radioVizeNotlariMin";
             this.radioVizeNotlariMin.Size = new System.Drawing.Size(203, 17);
             this.radioVizeNotlariMin.TabIndex = 21;
@@ -619,7 +632,7 @@ namespace EntityOrnek
             // 
             // cmbDersSec
             // 
-            this.cmbDersSec.Location = new System.Drawing.Point(1109, 249);
+            this.cmbDersSec.Location = new System.Drawing.Point(1109, 319);
             this.cmbDersSec.Name = "cmbDersSec";
             this.cmbDersSec.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -631,26 +644,62 @@ namespace EntityOrnek
             // 
             this.LblDersSec.Appearance.Font = new System.Drawing.Font("PMingLiU-ExtB", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LblDersSec.Appearance.Options.UseFont = true;
-            this.LblDersSec.Location = new System.Drawing.Point(1011, 251);
+            this.LblDersSec.Location = new System.Drawing.Point(1011, 321);
             this.LblDersSec.Name = "LblDersSec";
             this.LblDersSec.Size = new System.Drawing.Size(83, 15);
             this.LblDersSec.TabIndex = 29;
             this.LblDersSec.Text = "DERS ADI :";
             // 
-            // cmbDersAdi
+            // radioKalan
             // 
-            this.cmbDersAdi.Location = new System.Drawing.Point(155, 109);
-            this.cmbDersAdi.Name = "cmbDersAdi";
-            this.cmbDersAdi.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbDersAdi.Size = new System.Drawing.Size(129, 20);
-            this.cmbDersAdi.TabIndex = 27;
+            this.radioKalan.AutoSize = true;
+            this.radioKalan.Location = new System.Drawing.Point(1011, 253);
+            this.radioKalan.Name = "radioKalan";
+            this.radioKalan.Size = new System.Drawing.Size(103, 17);
+            this.radioKalan.TabIndex = 31;
+            this.radioKalan.TabStop = true;
+            this.radioKalan.Text = "Kalan Öğrenciler";
+            this.radioKalan.UseVisualStyleBackColor = true;
+            // 
+            // radioGeçen
+            // 
+            this.radioGeçen.AutoSize = true;
+            this.radioGeçen.Location = new System.Drawing.Point(1011, 230);
+            this.radioGeçen.Name = "radioGeçen";
+            this.radioGeçen.Size = new System.Drawing.Size(105, 17);
+            this.radioGeçen.TabIndex = 30;
+            this.radioGeçen.TabStop = true;
+            this.radioGeçen.Text = "Geçer Öğrenciler";
+            this.radioGeçen.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(1014, 405);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(200, 17);
+            this.radioButton1.TabIndex = 32;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Kalan Öğrencilerden En Yüksek Alan";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // lblControl
+            // 
+            this.lblControl.Location = new System.Drawing.Point(1034, 447);
+            this.lblControl.Name = "lblControl";
+            this.lblControl.Size = new System.Drawing.Size(22, 13);
+            this.lblControl.TabIndex = 33;
+            this.lblControl.Text = "label";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 769);
+            this.Controls.Add(this.lblControl);
+            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.radioKalan);
+            this.Controls.Add(this.radioGeçen);
             this.Controls.Add(this.LblDersSec);
             this.Controls.Add(this.cmbDersSec);
             this.Controls.Add(this.radioVizeNotlariMin);
@@ -673,6 +722,7 @@ namespace EntityOrnek
             this.Controls.Add(this.grpOgrenci);
             this.Controls.Add(this.BtnBul);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sınav Bilgi Sistemi";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grpOgrenci)).EndInit();
@@ -686,6 +736,7 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.grpSınavlar)).EndInit();
             this.grpSınavlar.ResumeLayout(false);
             this.grpSınavlar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOgrNo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDurum.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtOrtalama.Properties)).EndInit();
@@ -699,7 +750,6 @@ namespace EntityOrnek
             ((System.ComponentModel.ISupportInitialize)(this.txtDersID.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbDersSec.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbDersAdi.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -758,6 +808,10 @@ namespace EntityOrnek
         private DevExpress.XtraEditors.ComboBoxEdit cmbDersSec;
         private DevExpress.XtraEditors.LabelControl LblDersSec;
         private DevExpress.XtraEditors.ComboBoxEdit cmbDersAdi;
+        private System.Windows.Forms.RadioButton radioKalan;
+        private System.Windows.Forms.RadioButton radioGeçen;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private DevExpress.XtraEditors.LabelControl lblControl;
     }
 }
 

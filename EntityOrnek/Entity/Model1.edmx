@@ -42,44 +42,12 @@
           <Property Name="Cinsiyet" Type="nchar" MaxLength="10" />
           <Property Name="Fotograf" Type="varchar" MaxLength="100" />
         </EntityType>
-        <Association Name="FK_TblNotlar_TblDersler">
-          <End Role="TblDersler" Type="Self.TblDersler" Multiplicity="0..1" />
-          <End Role="TblNotlar" Type="Self.TblNotlar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TblDersler">
-              <PropertyRef Name="DersID" />
-            </Principal>
-            <Dependent Role="TblNotlar">
-              <PropertyRef Name="Ders" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TblNotlar_TblOgrenci">
-          <End Role="TblOgrenci" Type="Self.TblOgrenci" Multiplicity="0..1" />
-          <End Role="TblNotlar" Type="Self.TblNotlar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TblOgrenci">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TblNotlar">
-              <PropertyRef Name="OGR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="NotListesi" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="DbSınavModelStoreContainer">
           <EntitySet Name="TblDersler" EntityType="Self.TblDersler" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblKulupler" EntityType="Self.TblKulupler" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblNotlar" EntityType="Self.TblNotlar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblOgrenci" EntityType="Self.TblOgrenci" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_TblNotlar_TblDersler" Association="Self.FK_TblNotlar_TblDersler">
-            <End Role="TblDersler" EntitySet="TblDersler" />
-            <End Role="TblNotlar" EntitySet="TblNotlar" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TblNotlar_TblOgrenci" Association="Self.FK_TblNotlar_TblOgrenci">
-            <End Role="TblOgrenci" EntitySet="TblOgrenci" />
-            <End Role="TblNotlar" EntitySet="TblNotlar" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -92,7 +60,6 @@
           </Key>
           <Property Name="DersID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DersAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TblNotlar" Relationship="Self.FK_TblNotlar_TblDersler" FromRole="TblDersler" ToRole="TblNotlar" />
         </EntityType>
         <EntityType Name="TblKulupler">
           <Key>
@@ -113,8 +80,6 @@
           <Property Name="But" Type="Int16" />
           <Property Name="Ortalama" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="Durum" Type="Boolean" />
-          <NavigationProperty Name="TblDersler" Relationship="Self.FK_TblNotlar_TblDersler" FromRole="TblNotlar" ToRole="TblDersler" />
-          <NavigationProperty Name="TblOgrenci" Relationship="Self.FK_TblNotlar_TblOgrenci" FromRole="TblNotlar" ToRole="TblOgrenci" />
         </EntityType>
         <EntityType Name="TblOgrenci">
           <Key>
@@ -125,45 +90,12 @@
           <Property Name="Soyad" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="Cinsiyet" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Fotograf" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TblNotlar" Relationship="Self.FK_TblNotlar_TblOgrenci" FromRole="TblOgrenci" ToRole="TblNotlar" />
         </EntityType>
-        <Association Name="FK_TblNotlar_TblDersler">
-          <End Role="TblDersler" Type="Self.TblDersler" Multiplicity="0..1" />
-          <End Role="TblNotlar" Type="Self.TblNotlar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TblDersler">
-              <PropertyRef Name="DersID" />
-            </Principal>
-            <Dependent Role="TblNotlar">
-              <PropertyRef Name="Ders" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TblNotlar_TblOgrenci">
-          <End Role="TblOgrenci" Type="Self.TblOgrenci" Multiplicity="0..1" />
-          <End Role="TblNotlar" Type="Self.TblNotlar" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TblOgrenci">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TblNotlar">
-              <PropertyRef Name="OGR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="DbSınavEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DbSınavEntities_" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TblDersler" EntityType="Self.TblDersler" />
           <EntitySet Name="TblKulupler" EntityType="Self.TblKulupler" />
           <EntitySet Name="TblNotlar" EntityType="Self.TblNotlar" />
           <EntitySet Name="TblOgrenci" EntityType="Self.TblOgrenci" />
-          <AssociationSet Name="FK_TblNotlar_TblDersler" Association="Self.FK_TblNotlar_TblDersler">
-            <End Role="TblDersler" EntitySet="TblDersler" />
-            <End Role="TblNotlar" EntitySet="TblNotlar" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TblNotlar_TblOgrenci" Association="Self.FK_TblNotlar_TblOgrenci">
-            <End Role="TblOgrenci" EntitySet="TblOgrenci" />
-            <End Role="TblNotlar" EntitySet="TblNotlar" />
-          </AssociationSet>
           <FunctionImport Name="NotListesi" ReturnType="Collection(DbSınavModel.NotListesi_Result)" />
         </EntityContainer>
         <ComplexType Name="NotListesi_Result">
@@ -183,7 +115,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DbSınavModelStoreContainer" CdmEntityContainer="DbSınavEntities2">
+        <EntityContainerMapping StorageEntityContainer="DbSınavModelStoreContainer" CdmEntityContainer="DbSınavEntities_">
           <EntitySetMapping Name="TblDersler">
             <EntityTypeMapping TypeName="DbSınavModel.TblDersler">
               <MappingFragment StoreEntitySet="TblDersler">

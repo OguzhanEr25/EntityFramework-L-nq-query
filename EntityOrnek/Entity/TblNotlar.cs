@@ -22,8 +22,5 @@ namespace EntityOrnek.Entity
         public Nullable<short> But { get; set; }
         public Nullable<decimal> Ortalama { get; set; }
         public Nullable<bool> Durum { get; set; }
-    
-        public virtual TblDersler TblDersler { get; set; }
-        public virtual TblOgrenci TblOgrenci { get; set; }
     }
 }
